@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
+{% extends 'common/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
 
-<h1>It works</h1>
+{% block title %}My title{% endblock %}
 
-</body>
-</html>
+
+{% block content %}
+    {% include 'common/navigation.html' %}
+    <div class="container">
+        <h1 class="bodycolor"> Content from home </h1>
+    </div>
+{% endblock %}
+
+
+
+
+
