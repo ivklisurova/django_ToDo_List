@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -8,3 +9,4 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=20)
     about = models.CharField(max_length=200)
     image_url = models.URLField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
