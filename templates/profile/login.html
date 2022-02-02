@@ -10,11 +10,13 @@
     {% include 'common/navigation.html' %}
     <div class="container">
         <h2>Log In</h2>
-        {{ form|crispy }}
-
-        {% buttons %}
-            <button type="submit" class="btn add-button btn-secondary">Submit</button>
-        {% endbuttons %}
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% buttons %}
+                <button type="submit" class="btn add-button btn-secondary">Submit</button>
+            {% endbuttons %}
+        </form>
     </div>
     {% include 'common/footer.html' %}
 

@@ -22,7 +22,10 @@ class RegisterView(CreateView):
 
 class LoginUserView(LoginView):
     template_name = 'profile/login.html'
-    # redirect_authenticated_user = True
+    redirect_authenticated_user = True
+
+    def get_queryset(self):
+        return User.objects.filter(user=self.request.user)
 
 
 class ProfileView(TemplateView):
