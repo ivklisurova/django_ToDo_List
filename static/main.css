@@ -3,10 +3,13 @@ h1 {
     padding-bottom: 20px;
 }
 
-footer{
+footer {
     background-color: #e3f2fd;
     height: 50px;
     padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .container {
