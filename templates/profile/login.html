@@ -1,0 +1,21 @@
+{% extends 'common/base.html' %}
+{% load crispy_forms_filters %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    {% include 'common/navigation.html' %}
+    <div class="container">
+        <h2>Log In</h2>
+        {{ form|crispy }}
+
+        {% buttons %}
+            <button type="submit" class="btn add-button btn-secondary">Submit</button>
+        {% endbuttons %}
+    </div>
+    {% include 'common/footer.html' %}
+
+{% endblock %}
