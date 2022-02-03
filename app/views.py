@@ -29,7 +29,7 @@ class LoginUserView(LoginView):
 
 
 class ProfileView(TemplateView):
-    template_name = 'userprofile.html'
+    template_name = 'profile/account.html'
     profile_model = Profile
 
     # def get_context_data(self, **kwargs):
