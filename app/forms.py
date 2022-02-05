@@ -28,13 +28,19 @@ class RegisterForm(UserCreationForm):
         return email
 
 
-class ProfileForm(forms.ModelForm):
+# class ProfileForm(forms.ModelForm):
+#     class Meta:
+#         model = Profile
+#         fields = '__all__'
+
+
+class UpdateUserForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        fields = '__all__'
+        model = User
+        fields = ('first_name', 'last_name',)
 
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ('bio', 'avatar', )

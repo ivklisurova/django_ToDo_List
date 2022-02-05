@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
 
-from app.forms import RegisterForm, UpdateProfileForm
+from app.forms import RegisterForm, UpdateProfileForm, UpdateUserForm
 from app.models import Profile
 
 
@@ -50,19 +50,14 @@ class ProfileView(DetailView, LoginRequiredMixin):
         return data
 
 
+class UpdateProfileView(UpdateView):
+    model = User
+    template_name = 'profile/edit-profile.html'
+    form_class = UpdateProfileForm
+    success_url = reverse_lazy('home page')
 
-
-
-
-
-# class UpdateProfileView(UpdateView):
-#     model = Profile
-#     template_name = 'profile/edit_profile.html'
-#     form_class = UpdateProfileForm
-#     success_url = reverse_lazy('home page')
-#
-#     def get_context_data(self, **kwargs):
-#         data = super().get_context_data(**kwargs)
-#         data['heading_text'] = 'Edit Profile'
-#         data['form'] = self.form_class(instance=self.object)
-#         return data
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['heading_text'] = 'Edit Profile'
+        data['form'] = self.form_class(instance=self.object)
+        return data

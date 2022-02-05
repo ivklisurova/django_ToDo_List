@@ -9,7 +9,7 @@
     {% include 'common/navigation.html' %}
     <div class="container">
         <h2>{{ heading_text }}</h2>
-        <form method="post" action="{% url 'register' %}">
+        <form method="post" action="{% url 'change profile' user.id %}">
             {% csrf_token %}
             {{ form|crispy }}
             {% buttons %}
