@@ -85,7 +85,7 @@
                                                 <label style="font-weight:bold;">Bio</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                                Something
+                                                {{ user.profile.bio }}
                                             </div>
                                         </div>
                                         <hr/>
@@ -103,10 +103,10 @@
 
     </div>
     <div class="container">
-    {% buttons %}
-        <a href="#" class="btn btn-secondary" role="button" aria-pressed="true">Update Profile Info</a>
-        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">TODOs</a>
-    {% endbuttons %}
+        {% buttons %}
+            <a href="#" class="btn btn-secondary" role="button" aria-pressed="true">Update Profile Info</a>
+            <a href="#" class="btn btn-danger" role="button" aria-pressed="true">TODOs</a>
+        {% endbuttons %}
     </div>
 
 {% endblock %}

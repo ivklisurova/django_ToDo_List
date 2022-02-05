@@ -1,10 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, DetailView
 
 from app.forms import RegisterForm
 from app.models import Profile
@@ -28,11 +29,8 @@ class LoginUserView(LoginView):
         return User.objects.filter(user=self.request.user)
 
 
-class ProfileView(TemplateView):
+class ProfileView(DetailView, LoginRequiredMixin):
     template_name = 'profile/account.html'
-    profile_model = Profile
-
-    # def get_context_data(self, **kwargs):
-    #     data = super().get_context_data(**kwargs)
-    #     data['my_profile'] = self.profile_model.objects.get()
-    #     return data
+    model = Profile
+    context_object_name = 'account'
+    queryset = Profile.objects.get(user_id=5)
