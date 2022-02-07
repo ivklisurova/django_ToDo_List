@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
 
-from app.forms import RegisterForm, UpdateProfileForm, UpdateUserForm
+from app.forms import RegisterForm, UpdateProfileForm, UpdateUserForm, UserProfileInlineFormset
 from app.models import Profile
 
 
@@ -50,14 +51,42 @@ class ProfileView(DetailView, LoginRequiredMixin):
         return data
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(UpdateView, LoginRequiredMixin):
     model = User
     template_name = 'profile/edit-profile.html'
-    form_class = UpdateProfileForm
-    success_url = reverse_lazy('home page')
+    form_class = UpdateUserForm
+    success_url = reverse_lazy('profile account')
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['heading_text'] = 'Edit Profile'
-        data['form'] = self.form_class(instance=self.object)
-        return data
+        context = super(UpdateProfileView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['form'] = UpdateUserForm(self.request.POST, instance=self.object)
+            context['user_profile_meta_formset'] = UserProfileInlineFormset(self.request.POST, instance=self.object)
+        else:
+            context['form'] = UpdateUserForm(instance=self.object)
+            context['user_profile_meta_formset'] = UserProfileInlineFormset(instance=self.object)
+        context['heading_text'] = 'Edit Profile'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        user_profile_meta_formset = UserProfileInlineFormset(self.request.POST)
+        if form.is_valid() and user_profile_meta_formset.is_valid():
+            return self.form_valid(form, user_profile_meta_formset)
+        else:
+            return self.form_invalid(form, user_profile_meta_formset)
+
+    def form_valid(self, form, user_profile_meta_formset):
+        self.object = form.save()
+        user_profile_meta_formset.instance = self.object
+        user_profile_meta_formset.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, user_profile_meta_formset):
+        return self.render_to_response(
+            self.get_context_data(form=form,
+                user_profile_meta_formset=user_profile_meta_formset,
+            ))
+

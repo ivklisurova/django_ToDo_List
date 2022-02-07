@@ -3,7 +3,7 @@
 {% load crispy_forms_filters %}
 {% load static %}
 
-{% block title %}{{ heading_text}}{% endblock %}
+{% block title %}{{ heading_text }}{% endblock %}
 
 {% block content %}
     {% include 'common/navigation.html' %}
@@ -11,10 +11,17 @@
         <h2>{{ heading_text }}</h2>
         <form method="post" action="{% url 'change profile' user.id %}">
             {% csrf_token %}
+
             {{ form|crispy }}
+
+            {% for form in user_profile_meta_formset %}
+                {{ form|crispy }}
+            {% endfor %}
+
             {% buttons %}
                 <button type="submit" class="btn add-button btn-secondary">Submit</button>
             {% endbuttons %}
         </form>
+    </div>
 
 {% endblock %}
