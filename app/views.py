@@ -40,7 +40,7 @@ class LoginUserView(LoginView):
         return data
 
 
-class ProfileView(DetailView, LoginRequiredMixin):
+class ProfileView(LoginRequiredMixin, DetailView ):
     template_name = 'profile/profile-page.html'
     model = User
     context_object_name = 'account'
@@ -55,7 +55,6 @@ class UpdateProfileView(UpdateView):
     model = User
     template_name = 'profile/edit-profile.html'
     form_class = UpdateUserForm
-    success_url = reverse_lazy('profile account')
 
     def get_context_data(self, **kwargs):
         context = super(UpdateProfileView, self).get_context_data(**kwargs)
