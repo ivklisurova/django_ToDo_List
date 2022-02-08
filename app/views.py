@@ -22,9 +22,9 @@ class RegisterView(CreateView):
     template_name = 'profile/register.html'
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['heading_text'] = 'Register'
-        return data
+        context = super().get_context_data(**kwargs)
+        context['heading_text'] = 'Register'
+        return context
 
     def form_valid(self, form):
         data = super().form_valid(form)
@@ -40,9 +40,9 @@ class LoginUserView(LoginView):
         return User.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['heading_text'] = 'Log In'
-        return data
+        context = super().get_context_data(**kwargs)
+        context['heading_text'] = 'Log In'
+        return context
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -51,9 +51,9 @@ class ProfileView(LoginRequiredMixin, DetailView):
     context_object_name = 'account'
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['heading_text'] = 'Profile Info'
-        return data
+        context = super().get_context_data(**kwargs)
+        context['heading_text'] = 'Profile Info'
+        return context
 
 
 class UpdateProfileView(UpdateView):
