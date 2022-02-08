@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
@@ -83,8 +83,9 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
             self.object = form.save()
             user_profile.instance = self.object
             user_profile.save()
-        # return self.render_to_response(self.get_context_data(form=form))
         return HttpResponseRedirect(self.get_success_url())
+
+
 
 
 

@@ -1,5 +1,3 @@
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Submit
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -29,12 +27,6 @@ class RegisterForm(UserCreationForm):
         return email
 
 
-# class ProfileForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = '__all__'
-
-
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -51,12 +43,5 @@ UserProfileInlineFormset = inlineformset_factory(
     User,
     Profile,
     form=UpdateProfileForm,
-    # extra=5,
-    # max_num=5,
-    # fk_name=None,
-    # fields=None, exclude=None, can_order=False,
-    # can_delete=True, max_num=None, formfield_callback=None,
-    # widgets=None, validate_max=False, localized_fields=None,
-    # labels=None, help_texts=None, error_messages=None,
-    # min_num=None, validate_min=False, field_classes=None
+    can_delete=False,
 )
