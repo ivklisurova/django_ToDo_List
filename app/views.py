@@ -51,7 +51,7 @@ class ProfileView(DetailView, LoginRequiredMixin):
         return data
 
 
-class UpdateProfileView(UpdateView, LoginRequiredMixin):
+class UpdateProfileView(UpdateView):
     model = User
     template_name = 'profile/edit-profile.html'
     form_class = UpdateUserForm
@@ -68,25 +68,11 @@ class UpdateProfileView(UpdateView, LoginRequiredMixin):
         context['heading_text'] = 'Edit Profile'
         return context
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        user_profile_meta_formset = UserProfileInlineFormset(self.request.POST)
-        if form.is_valid() and user_profile_meta_formset.is_valid():
-            return self.form_valid(form, user_profile_meta_formset)
-        else:
-            return self.form_invalid(form, user_profile_meta_formset)
-
-    def form_valid(self, form, user_profile_meta_formset):
-        self.object = form.save()
-        user_profile_meta_formset.instance = self.object
-        user_profile_meta_formset.save()
-        return HttpResponseRedirect(self.get_success_url())
-
-    def form_invalid(self, form, user_profile_meta_formset):
-        return self.render_to_response(
-            self.get_context_data(form=form,
-                user_profile_meta_formset=user_profile_meta_formset,
-            ))
-
+    def form_valid(self, form):
+        context = self.get_context_data()
+        user_profile = context['user_profile_meta_formset']
+        if user_profile.is_valid():
+            self.object = form.save()
+            user_profile.instance = self.object
+            user_profile.save()
+        return self.render_to_response(self.get_context_data(form=form))
