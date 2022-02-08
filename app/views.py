@@ -1,15 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView
 
-from app.forms import RegisterForm, UpdateProfileForm, UpdateUserForm, UserProfileInlineFormset
-from app.models import Profile
+from app.forms import RegisterForm, UpdateUserForm, UserProfileInlineFormset
 
 
 def index(request):
@@ -40,7 +38,7 @@ class LoginUserView(LoginView):
         return data
 
 
-class ProfileView(LoginRequiredMixin, DetailView ):
+class ProfileView(LoginRequiredMixin, DetailView):
     template_name = 'profile/profile-page.html'
     model = User
     context_object_name = 'account'
