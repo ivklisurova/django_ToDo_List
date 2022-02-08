@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
@@ -23,6 +24,11 @@ class RegisterView(CreateView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['heading_text'] = 'Register'
+        return data
+
+    def form_valid(self, form):
+        data = super().form_valid(form)
+        login(self.request, self.object)
         return data
 
 
