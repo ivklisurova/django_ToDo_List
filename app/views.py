@@ -56,7 +56,7 @@ class ProfileView(LoginRequiredMixin, DetailView):
         return context
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'profile/edit-profile.html'
     form_class = UpdateUserForm
