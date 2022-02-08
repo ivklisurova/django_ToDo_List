@@ -57,7 +57,7 @@ class UpdateProfileView(UpdateView):
 
     def get_success_url(self):
         pk = self.kwargs['pk']
-        return reverse('profile account', kwargs={"pk": pk})
+        return reverse('profile account', kwargs={'pk': pk})
 
     def get_context_data(self, **kwargs):
         context = super(UpdateProfileView, self).get_context_data(**kwargs)
