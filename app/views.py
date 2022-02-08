@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, UpdateView
 
 from app.forms import RegisterForm, UpdateUserForm, UserProfileInlineFormset
@@ -54,6 +55,10 @@ class UpdateProfileView(UpdateView):
     template_name = 'profile/edit-profile.html'
     form_class = UpdateUserForm
 
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse('profile account', kwargs={"pk": pk})
+
     def get_context_data(self, **kwargs):
         context = super(UpdateProfileView, self).get_context_data(**kwargs)
         if self.request.POST:
@@ -72,4 +77,8 @@ class UpdateProfileView(UpdateView):
             self.object = form.save()
             user_profile.instance = self.object
             user_profile.save()
-        return self.render_to_response(self.get_context_data(form=form))
+        # return self.render_to_response(self.get_context_data(form=form))
+        return HttpResponseRedirect(self.get_success_url())
+
+
+
