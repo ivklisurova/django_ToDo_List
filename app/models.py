@@ -17,3 +17,10 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+
+class ToDo(models.Model):
+    todo_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    task_name = models.CharField(max_length=40, default='')
+    task_text = models.TextField(max_length=450, default='')
+    task_done = models.BooleanField(default=False)
