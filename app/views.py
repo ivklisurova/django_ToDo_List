@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, UpdateView, ListView
+from django.views.generic import CreateView, DetailView, UpdateView
 
 from app.forms import RegisterForm, UpdateUserForm, UserProfileInlineFormset
 from app.models import ToDo
@@ -87,9 +87,15 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class TodoList(ListView):
+class TodoList(CreateView):
     model = ToDo
     template_name = 'profile/todo.html'
+    success_url = reverse_lazy('home page')
+    fields = ('task_name', 'task_text', 'task_done')
+
+    def form_valid(self, form):
+        form.instance.todo_owner = self.request.user
+        return super(TodoList, self).form_valid(form)
 
 
 

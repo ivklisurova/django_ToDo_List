@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
 
-from app.models import Profile
+from app.models import Profile, ToDo
 
 
 class RegisterForm(UserCreationForm):
@@ -45,3 +45,4 @@ UserProfileInlineFormset = inlineformset_factory(
     form=UpdateProfileForm,
     can_delete=False,
 )
+
