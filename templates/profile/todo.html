@@ -8,19 +8,39 @@
 
 
 {% block content %}
+    {% include 'common/navigation.html' %}
 
     <div class="container">
         <h1>My Tasks</h1>
 
-        {% for object in object_list %}
+        <div class="container">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">My next task</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td>{{ object.task_name }}</td>
+                        <td>{{ object.task_text }}</td>
+                        <td>{{ object.task_done }}</td>
+                        <td><i class="fa fa-solid fa-check"></i></td>
+                        <td><i class="fa fa-solid fa-trash"></i></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-            <li>{{ object.task_name }}</li>
-            <li>{{ object.task_text }}</li>
-            <li>{{ object.task_done }}</li>
-
-        {% endfor %}
-
+        </div>
 
     </div>
+
+    {% include 'common/footer.html' %}
 
 {% endblock %}

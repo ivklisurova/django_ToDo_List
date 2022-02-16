@@ -57,5 +57,13 @@ footer {
     opacity: 1;
 }
 
+.fa-check {
+    color: green;
+}
+
+.fa-trash {
+    color: red;
+}
+
 
 
