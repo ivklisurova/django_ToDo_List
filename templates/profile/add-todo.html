@@ -1,0 +1,23 @@
+{% extends 'common/base.html' %}
+{% load crispy_forms_filters %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <div class="container">
+        <h1>Add new TODO</h1>
+        <form method="post" action="{% url 'todo' %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% buttons %}
+                <button type="submit" class="btn add-button btn-secondary">Submit</button>
+            {% endbuttons %}
+        </form>
+    </div>
+    
+{% endblock %}
+

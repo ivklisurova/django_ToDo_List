@@ -4,18 +4,23 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+{% block title %}{{ heading_text }}{% endblock %}
+
 
 {% block content %}
 
-    <h1>My content</h1>
+    <div class="container">
+        <h1>My Tasks</h1>
 
-    <form method="post" action="{% url 'todo' %}">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% buttons %}
-            <button type="submit" class="btn add-button btn-secondary">Submit</button>
-        {% endbuttons %}
-    </form>
+        {% for object in object_list %}
+
+            <li>{{ object.task_name }}</li>
+            <li>{{ object.task_text }}</li>
+            <li>{{ object.task_done }}</li>
+
+        {% endfor %}
+
+
+    </div>
 
 {% endblock %}
-
