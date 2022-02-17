@@ -105,11 +105,13 @@ class CreateTodo(CreateView):
     model = ToDo
     template_name = 'profile/add-todo.html'
     success_url = reverse_lazy('home page')
-    fields = ('task_name', 'task_text', 'task_done')
+    fields = ('task_name', 'task_text',)
 
     def form_valid(self, form):
         form.instance.todo_owner = self.request.user
         return super(CreateTodo, self).form_valid(form)
+
+
 
 
 class DeleteTodo(DeleteView):
