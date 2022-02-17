@@ -10,7 +10,7 @@
 
     <div class="container">
         <h1>Add new TODO</h1>
-        <form method="post" action="{% url 'todo' %}">
+        <form method="post" action="{% url 'create todo' %}">
             {% csrf_token %}
             {{ form|crispy }}
             {% buttons %}

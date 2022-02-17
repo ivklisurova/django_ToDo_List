@@ -29,14 +29,16 @@
                     <tr>
                         <td>{{ object.task_name }}</td>
                         <td>{{ object.task_text }}</td>
-                        <td>{{ object.task_done }}</td>
                         <td><i class="fa fa-solid fa-check"></i></td>
+                        <td><i class="fa fa-solid fa-pen"></i></td>
                         <td><a href="{% url 'delete todo' pk=object.pk %}"><i class="fa fa-solid fa-trash"></i></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-
+            {% buttons %}
+                <a href="{% url "create todo" %}" class="btn btn-danger" role="button" aria-pressed="true">Add Task</a>
+            {% endbuttons %}
         </div>
 
     </div>

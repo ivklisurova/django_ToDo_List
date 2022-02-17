@@ -87,17 +87,6 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class TodoCreate(CreateView):
-    model = ToDo
-    template_name = 'profile/add-todo.html'
-    success_url = reverse_lazy('home page')
-    fields = ('task_name', 'task_text', 'task_done')
-
-    def form_valid(self, form):
-        form.instance.todo_owner = self.request.user
-        return super(TodoCreate, self).form_valid(form)
-
-
 class TodoList(ListView):
     model = ToDo
     template_name = 'profile/todo.html'
@@ -112,10 +101,20 @@ class TodoList(ListView):
         return context
 
 
+class CreateTodo(CreateView):
+    model = ToDo
+    template_name = 'profile/add-todo.html'
+    success_url = reverse_lazy('home page')
+    fields = ('task_name', 'task_text', 'task_done')
+
+    def form_valid(self, form):
+        form.instance.todo_owner = self.request.user
+        return super(CreateTodo, self).form_valid(form)
+
+
 class DeleteTodo(DeleteView):
     model = ToDo
     success_url = reverse_lazy('todo')
 
     def get(self, *args, **kwargs):
         return self.delete(*args, **kwargs)
-

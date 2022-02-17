@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from app import views
-from app.views import RegisterView, LoginUserView, ProfileView, UpdateProfileView, TodoList, DeleteTodo
+from app.views import RegisterView, LoginUserView, ProfileView, UpdateProfileView, TodoList, DeleteTodo, CreateTodo
 
 urlpatterns = [
                   path('', views.index, name='home page'),
@@ -15,4 +15,5 @@ urlpatterns = [
                   path('update-profile/<int:pk>', UpdateProfileView.as_view(), name='change profile'),
                   path('todo/', TodoList.as_view(), name='todo'),
                   path('delete/<int:pk>', DeleteTodo.as_view(), name='delete todo'),
+                  path('add/', CreateTodo.as_view(), name='create todo'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
