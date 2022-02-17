@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, UpdateView, ListView
+from django.views.generic import CreateView, DetailView, UpdateView, ListView, DeleteView
 
 from app.forms import RegisterForm, UpdateUserForm, UserProfileInlineFormset
 from app.models import ToDo
@@ -110,3 +110,12 @@ class TodoList(ListView):
         context['heading_text'] = 'My Tasks'
         context['tasks'] = self.get_queryset()
         return context
+
+
+class DeleteTodo(DeleteView):
+    model = ToDo
+    success_url = reverse_lazy('todo')
+
+    def get(self, *args, **kwargs):
+        return self.delete(*args, **kwargs)
+
