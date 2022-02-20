@@ -109,6 +109,11 @@ class CreateTodo(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('todo')
     fields = ('task_name', 'task_text',)
 
+    def get_context_data(self, **kwargs):
+        context = super(CreateTodo, self).get_context_data(**kwargs)
+        context['heading_text'] = 'Create Task'
+        return context
+
     def form_valid(self, form):
         form.instance.todo_owner = self.request.user
         return super(CreateTodo, self).form_valid(form)
