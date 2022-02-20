@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
@@ -88,7 +89,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class TodoList(ListView):
+class TodoList(LoginRequiredMixin, ListView):
     model = ToDo
     template_name = 'profile/todo.html'
 
@@ -102,7 +103,7 @@ class TodoList(ListView):
         return context
 
 
-class CreateTodo(CreateView):
+class CreateTodo(LoginRequiredMixin,CreateView):
     model = ToDo
     template_name = 'profile/add-todo.html'
     success_url = reverse_lazy('todo')
@@ -113,6 +114,7 @@ class CreateTodo(CreateView):
         return super(CreateTodo, self).form_valid(form)
 
 
+@login_required
 @csrf_exempt
 def mark_as_done(request, pk):
     task = ToDo.objects.get(pk=pk)
@@ -121,7 +123,7 @@ def mark_as_done(request, pk):
     return redirect('todo')
 
 
-class DeleteTodo(DeleteView):
+class DeleteTodo(LoginRequiredMixin,DeleteView):
     model = ToDo
     success_url = reverse_lazy('todo')
 
