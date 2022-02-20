@@ -17,7 +17,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">My next task</th>
+                    <th scope="col">What's Next</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -26,14 +26,17 @@
                 </thead>
                 <tbody>
                 {% for object in object_list %}
-                    <tr>
-                        <td>{{ object.task_name }}</td>
-                        <td>{{ object.task_text }}</td>
-                        <td><a href="{% url 'mark as done' pk=object.pk %}" id="done"><i
-                                class="fa fa-solid fa-check"></i></a></td>
-                        <td><i class="fa fa-solid fa-pen"></i></td>
-                        <td><a href="{% url 'delete todo' pk=object.pk %}"><i class="fa fa-solid fa-trash"></i></a></td>
-                    </tr>
+                    {% if not object.task_done %}
+                        <tr>
+                            <td>{{ object.task_name }}</td>
+                            <td>{{ object.task_text }}</td>
+                            <td><a href="{% url 'mark as done' pk=object.pk %}" id="done"><i
+                                    class="fa fa-solid fa-check"></i></a></td>
+                            <td><i class="fa fa-solid fa-pen"></i></td>
+                            <td><a href="{% url 'delete todo' pk=object.pk %}"><i class="fa fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
