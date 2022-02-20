@@ -16,4 +16,6 @@ urlpatterns = [
                   path('todo/', TodoList.as_view(), name='todo'),
                   path('delete/<int:pk>', DeleteTodo.as_view(), name='delete todo'),
                   path('add/', CreateTodo.as_view(), name='create todo'),
+                  path('mark-done/<int:pk>', views.mark_as_done, name='mark as done'),
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

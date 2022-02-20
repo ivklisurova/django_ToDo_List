@@ -2,11 +2,12 @@ from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, UpdateView, ListView, DeleteView
 
 from app.forms import RegisterForm, UpdateUserForm, UserProfileInlineFormset
@@ -111,6 +112,13 @@ class CreateTodo(CreateView):
         form.instance.todo_owner = self.request.user
         return super(CreateTodo, self).form_valid(form)
 
+
+@csrf_exempt
+def mark_as_done(request, pk):
+    task = ToDo.objects.get(pk=pk)
+    task.task_done = True
+    task.save()
+    return redirect('todo')
 
 
 class DeleteTodo(DeleteView):
