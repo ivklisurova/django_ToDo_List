@@ -10,7 +10,7 @@
 
     <div class="container">
         <h1>Edit ToDo</h1>
-        <form method="post" action="{% url 'create todo' %}">
+        <form method="post" action="{% url 'update todo' object.pk %}">
             {% csrf_token %}
             {{ form|crispy }}
             {% buttons %}
