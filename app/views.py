@@ -54,8 +54,10 @@ class ProfileView(LoginRequiredMixin, DetailView):
     context_object_name = 'account'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(ProfileView, self).get_context_data(**kwargs)
         context['heading_text'] = 'Profile Info'
+        context['finished_tasks'] = len(ToDo.objects.filter(todo_owner=self.request.user).filter(task_done=True))
+        context['upcoming_tasks'] = len(ToDo.objects.filter(todo_owner=self.request.user).filter(task_done=False))
         return context
 
 
