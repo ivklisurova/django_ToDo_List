@@ -32,7 +32,8 @@
                             <td>{{ object.task_text }}</td>
                             <td><a href="{% url 'mark as done' pk=object.pk %}" id="done"><i
                                     class="fa fa-solid fa-check"></i></a></td>
-                            <td><i class="fa fa-solid fa-pen"></i></td>
+                            <td><a href="{% url 'update todo' pk=object.pk %}"><i class="fa fa-solid fa-pen"></i></a>
+                            </td>
                             <td><a href="{% url 'delete todo' pk=object.pk %}"><i class="fa fa-solid fa-trash"></i></a>
                             </td>
                         </tr>

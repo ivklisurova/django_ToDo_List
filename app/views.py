@@ -11,7 +11,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DetailView, UpdateView, ListView, DeleteView
 
-from app.forms import RegisterForm, UpdateUserForm, UserProfileInlineFormset
+from app.forms import RegisterForm, UpdateUserForm, UserProfileInlineFormset, UpdateTaskForm
 from app.models import ToDo
 
 
@@ -91,7 +91,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
 
 class TodoList(LoginRequiredMixin, ListView):
     model = ToDo
-    template_name = 'profile/todo.html'
+    template_name = 'taskmanager/todo.html'
 
     def get_queryset(self):
         return ToDo.objects.filter(todo_owner=self.request.user)
@@ -103,15 +103,33 @@ class TodoList(LoginRequiredMixin, ListView):
         return context
 
 
-class CreateTodo(LoginRequiredMixin,CreateView):
+class CreateTodo(LoginRequiredMixin, CreateView):
     model = ToDo
-    template_name = 'profile/add-todo.html'
+    template_name = 'taskmanager/add-todo.html'
     success_url = reverse_lazy('todo')
     fields = ('task_name', 'task_text',)
 
     def form_valid(self, form):
         form.instance.todo_owner = self.request.user
         return super(CreateTodo, self).form_valid(form)
+
+
+class UpdateToDo(LoginRequiredMixin, UpdateView):
+    model = ToDo
+    template_name = 'taskmanager/update-todo.html'
+    success_url = reverse_lazy('todo')
+    form_class = UpdateTaskForm
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateToDo, self).get_context_data(**kwargs)
+
+        if self.request.POST:
+            context['form'] = UpdateTaskForm(self.request.POST, instance=self.object)
+        else:
+            context['form'] = UpdateTaskForm(instance=self.object)
+        context['heading_text'] = 'Edit Task'
+
+        return context
 
 
 @login_required
@@ -123,7 +141,7 @@ def mark_as_done(request, pk):
     return redirect('todo')
 
 
-class DeleteTodo(LoginRequiredMixin,DeleteView):
+class DeleteTodo(LoginRequiredMixin, DeleteView):
     model = ToDo
     success_url = reverse_lazy('todo')
 

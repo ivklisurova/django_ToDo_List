@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from app import views
-from app.views import RegisterView, LoginUserView, ProfileView, UpdateProfileView, TodoList, DeleteTodo, CreateTodo
+from app.views import RegisterView, LoginUserView, ProfileView, UpdateProfileView, TodoList, DeleteTodo, CreateTodo, \
+    UpdateToDo
 
 urlpatterns = [
                   path('', views.index, name='home page'),
@@ -17,5 +18,6 @@ urlpatterns = [
                   path('delete/<int:pk>', DeleteTodo.as_view(), name='delete todo'),
                   path('add/', CreateTodo.as_view(), name='create todo'),
                   path('mark-done/<int:pk>', views.mark_as_done, name='mark as done'),
+                  path('edit/<int:pk>', UpdateToDo.as_view(), name='update todo'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
-from app.models import Profile
+from app.models import Profile, ToDo
 
 
 class RegisterForm(UserCreationForm):
@@ -45,3 +45,8 @@ UserProfileInlineFormset = inlineformset_factory(
     can_delete=False,
 )
 
+
+class UpdateTaskForm(forms.ModelForm):
+    class Meta:
+        model = ToDo
+        fields = ('task_name', 'task_text',)
