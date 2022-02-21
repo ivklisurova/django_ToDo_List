@@ -105,6 +105,20 @@ class TodoList(LoginRequiredMixin, ListView):
         return context
 
 
+class ArchiveToDo(LoginRequiredMixin, ListView):
+    model = ToDo
+    template_name = 'taskmanager/archive-todo.html'
+
+    def get_queryset(self):
+        return ToDo.objects.filter(todo_owner=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super(ArchiveToDo, self).get_context_data(**kwargs)
+        context['heading_text'] = 'Archive'
+        context['tasks'] = self.get_queryset()
+        return context
+
+
 class CreateTodo(LoginRequiredMixin, CreateView):
     model = ToDo
     template_name = 'taskmanager/add-todo.html'
