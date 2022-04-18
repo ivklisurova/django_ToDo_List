@@ -65,5 +65,14 @@ footer {
     color: red;
 }
 
+.h2-card-body {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.label-style {
+    font-weight:bold;
+}
+
 
 
