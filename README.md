@@ -8,8 +8,7 @@
 
 
 ### General info
-Personal project for sample ToDo app. A task management app to help you stay organized and manage your day-to-day using Django. 
-
+Task management Django app to help you stay organized and manage your day-to-day. 
 
 ### Built With
 - Django
